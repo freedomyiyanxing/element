@@ -3,7 +3,7 @@ var fs = require('fs');
 var render = require('json-templater/string');
 var uppercamelcase = require('uppercamelcase');
 var path = require('path');
-var endOfLine = require('os').EOL;
+var endOfLine = require('os').EOL; // os.EOL属性是一个常量，返回当前操作系统的换行符（Windows系统是\r\n，其他系统是\n）
 
 var OUTPUT_PATH = path.join(__dirname, '../../src/index.js');
 var IMPORT_TEMPLATE = 'import {{name}} from \'../packages/{{package}}/index.js\';';
@@ -70,7 +70,7 @@ var installTemplate = [];
 var listTemplate = [];
 
 ComponentNames.forEach(name => {
-  var componentName = uppercamelcase(name);
+  var componentName = uppercamelcase(name); // 修改成大驼峰 'dropdown-item' 转换成 DropdownItem
 
   includeComponentTemplate.push(render(IMPORT_TEMPLATE, {
     name: componentName,
@@ -87,6 +87,8 @@ ComponentNames.forEach(name => {
   if (componentName !== 'Loading') listTemplate.push(`  ${componentName}`);
 });
 
+console.log('---', endOfLine);
+
 var template = render(MAIN_TEMPLATE, {
   include: includeComponentTemplate.join(endOfLine),
   install: installTemplate.join(',' + endOfLine),
@@ -95,5 +97,5 @@ var template = render(MAIN_TEMPLATE, {
 });
 
 fs.writeFileSync(OUTPUT_PATH, template);
-console.log('[build entry] DONE:', OUTPUT_PATH);
+console.log('[build entry] DONE:', template);
 

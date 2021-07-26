@@ -1,4 +1,5 @@
 import { kebabCase } from 'element-ui/src/utils/util';
+
 /**
  * Show migrating guide in browser console.
  *
@@ -20,6 +21,7 @@ import { kebabCase } from 'element-ui/src/utils/util';
  *    };
  *  },
  */
+
 export default {
   mounted() {
     if (process.env.NODE_ENV === 'production') return;
